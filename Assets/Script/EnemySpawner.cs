@@ -9,10 +9,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private RectTransform _formationRect;
-
     private void Start()
     {
-        _formationRect = GetComponent<RectTransform>();
         CreateEnemyFormation();
     }
 
@@ -24,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int col = 0; col < _enemiesPerRow; col++)
             {
-                Vector2 enemyPosition = startPosition + new Vector2(col * _distanceBetweenEnemies, row * _distanceBetweenRows);
+                Vector2 enemyPosition = startPosition + new Vector2(col * _distanceBetweenEnemies, row * -_distanceBetweenRows);
 
                 GameObject enemy = Instantiate(_enemyPrefab, _formationRect);
                 RectTransform enemyRect = enemy.GetComponent<RectTransform>();
