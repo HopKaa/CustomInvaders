@@ -1,22 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerLives : MonoBehaviour
 {
     private int _lives = 3;
     [SerializeField] private Image[] _livesUI;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    [SerializeField] private TMP_Text _gameOverText;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -40,6 +30,8 @@ public class PlayerLives : MonoBehaviour
             if (_lives <= 0)
             {
                 Destroy(gameObject);
+                _gameOverText.text = "Game Over";
+                Time.timeScale = 0;
             }
         }
     }

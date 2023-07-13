@@ -4,11 +4,6 @@ public class ProjectileShoot : MonoBehaviour
 {
     [SerializeField] private GameObject _bulletPrefab;
     private GameObject _currentBullet;
-    void Start()
-    {
-        
-    }
-
     private void Update()
     {
         if (_currentBullet == null && Input.GetKeyDown(KeyCode.Space))
