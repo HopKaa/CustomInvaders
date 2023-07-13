@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShipEnemyMovement : MonoBehaviour
 {
-    private float _moveSpeed = 700f;
+    private float _moveSpeed = 200f;
     private  void Update()
     {
         transform.Translate(Vector2.right * _moveSpeed * Time.deltaTime);
