@@ -1,28 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerLives : MonoBehaviour
 {
     private int _lives = 3;
-    // Start is called before the first frame update
+    [SerializeField] private Image[] _livesUI;
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
+            Destroy(collision.gameObject);
             _lives -= 1;
-            if(_lives <= 0)
+
+            for (int i = 0; i < _livesUI.Length; i++)
+            {
+                if (i < _lives)
+                {
+                    _livesUI[i].enabled = true;
+                }
+                else
+                {
+                    _livesUI[i].enabled = false;
+                }
+            }
+
+            if (_lives <= 0)
             {
                 Destroy(gameObject);
             }

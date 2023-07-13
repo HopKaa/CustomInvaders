@@ -1,11 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
     private float _moveSpeed = 500f;
+    private PointManager _pointManager;
 
+    private void Start()
+    {
+        _pointManager = GameObject.Find("PointManager").GetComponent<PointManager>();
+    }
     private void Update()
     {
         transform.Translate(Vector2.up * _moveSpeed * Time.deltaTime);
@@ -16,6 +19,7 @@ public class Projectile : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             Destroy(collision.gameObject);
+            _pointManager.UpdateScore(50);
             Destroy(gameObject);
         }
 

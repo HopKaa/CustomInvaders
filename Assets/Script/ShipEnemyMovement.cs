@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipEnemyMovement : MonoBehaviour
 {
-    private float _moveSpeed = 100f;
+    private float _moveSpeed = 700f;
     private  void Update()
     {
         transform.Translate(Vector2.right * _moveSpeed * Time.deltaTime);
@@ -14,7 +12,7 @@ public class ShipEnemyMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Boundary")
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 10, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y - 50, transform.position.z);
             _moveSpeed *= -1;
         }
     }
