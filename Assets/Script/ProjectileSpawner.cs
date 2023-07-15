@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileSpawner : MonoBehaviour
@@ -11,13 +9,13 @@ public class ProjectileSpawner : MonoBehaviour
     private GameObject _currentBullet;
     private float _spawnTimer;
 
-    void Start()
+    private void Start()
     {
         _spawnTimer = Random.Range(_spawnMin, _spawnMax);
     }
 
 
-    void Update()
+    private void Update()
     {
         _spawnTimer -= Time.deltaTime;
         if (_spawnTimer <= 0)
