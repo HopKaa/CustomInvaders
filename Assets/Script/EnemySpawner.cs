@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -10,9 +11,14 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private RectTransform _formationRect;
+    [SerializeField] private Button _destroyButton;
+
+    private InvadersMoveng _moveng;
+
     private void Start()
     {
-        CreateEnemyFormation();
+        _moveng = new InvadersMoveng();
+        _destroyButton.onClick.AddListener(DestroyEnemies);
     }
 
     private void CreateEnemyFormation()
@@ -28,7 +34,20 @@ public class EnemySpawner : MonoBehaviour
                 GameObject enemy = Instantiate(_enemyPrefab, _formationRect);
                 RectTransform enemyRect = enemy.GetComponent<RectTransform>();
                 enemyRect.anchoredPosition = enemyPosition;
+
+                enemy.GetComponent<ShipEnemyMovement>().Init(_moveng);
             }
         }
+    }
+
+    public void DestroyEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+
+        CreateEnemyFormation();
     }
 }
