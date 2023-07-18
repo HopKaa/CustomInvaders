@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,12 +13,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private RectTransform _formationRect;
     [SerializeField] private Button _destroyButton;
+    [SerializeField] private TMP_Text _gameOverText;
 
     private InvadersMoveng _moveng;
 
     private void Start()
     {
         _moveng = new InvadersMoveng();
+
         _destroyButton.onClick.AddListener(DestroyEnemies);
     }
 
@@ -40,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public void DestroyEnemies()
+    private void DestroyEnemies()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
@@ -49,5 +52,8 @@ public class EnemySpawner : MonoBehaviour
         }
 
         CreateEnemyFormation();
+
+        Time.timeScale = 1;
+        _gameOverText.text = "";
     }
 }
