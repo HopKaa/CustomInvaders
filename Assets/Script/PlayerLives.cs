@@ -19,6 +19,11 @@ public class PlayerLives : MonoBehaviour
         _resetButton.onClick.AddListener(ResetLives);
     }
 
+    private void Update()
+    {
+        CheckCompletion();
+    }
+
     private void UpdateLivesUI()
     {
         for (int i = 0; i < _livesUI.Length; i++)
@@ -62,6 +67,15 @@ public class PlayerLives : MonoBehaviour
         if (_players == null)
         {
             _players = Instantiate(_playersPrefab, _canvasParent);
+        }
+    }
+
+    public void CheckCompletion()
+    {
+        if (GameObject.FindGameObjectWithTag("Player") != null && GameObject.FindGameObjectWithTag("Enemy") == null)
+        {
+            _gameOverText.text = "Complete";
+            Time.timeScale = 0;
         }
     }
 }

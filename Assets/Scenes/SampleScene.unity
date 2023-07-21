@@ -372,7 +372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9fb63341475a048b8f0a981c01c970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _livesUI: []
+  _livesUI:
+  - {fileID: 1755958568}
+  - {fileID: 815162330}
+  - {fileID: 2138053639}
   _gameOverText: {fileID: 982234140}
   _resetButton: {fileID: 432439704}
   _playersPrefab: {fileID: 4253738509360917526, guid: 32f8f6cbe0fc3714698ecf95b08d8289, type: 3}
