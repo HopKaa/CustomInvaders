@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    private bool _isPaused;
     [SerializeField] private GameObject _pausePanel;
+
+    private bool _isPaused;
     private void Start()
     {
         _pausePanel.SetActive(false);

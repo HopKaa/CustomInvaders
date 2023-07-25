@@ -3,32 +3,33 @@ using UnityEngine;
 public class ShipEnemyMovement : MonoBehaviour
 {
     private float _moveSpeed = 200f;
-    private InvadersMoveng _moveng;
+    private InvadersMoving _moving;
     private bool _hasTriggeredBoundary = false;
 
-    public void Init(InvadersMoveng moven)
+    public void Init(InvadersMoving moven)
     {
-        _moveng = moven;
+        _moving = moven;
+    }
+
+    private void Start()
+    {
+        _moving.MovingChanged += OnMovingChaged;
+    }
+
+    private void OnDestroy()
+    {
+        _moving.MovingChanged -= OnMovingChaged;
     }
 
     private void OnMovingChaged()
     {
         if (!_hasTriggeredBoundary)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 50, transform.position.z);
+            var trans = transform;
+            trans.position = new Vector3(trans.position.x, trans.position.y - 50, trans.position.z);
             _moveSpeed *= -1;
             _hasTriggeredBoundary = true;
         }
-    }
-
-    private void Start()
-    {
-        _moveng.MovingChanged += OnMovingChaged;
-    }
-
-    private void OnDestroy()
-    {
-        _moveng.MovingChanged -= OnMovingChaged;
     }
 
     private void Update()
@@ -39,9 +40,9 @@ public class ShipEnemyMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Boundary")
+        if (collision.GetComponent<Boundary>())
         {
-            _moveng.InvaderTouchBoundary();
+            _moving.InvaderTouchBoundary();
         }
     }
 }

@@ -1,59 +1,83 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private const int _rows = 3;
-    private const int _enemiesPerRow = 6;
-    private const float _distanceBetweenEnemies = 100f;
-    private const float _distanceBetweenRows = 100f;
-    private const float _spawnOffset = 300f;
+    private const int Rows = 3;
+    private const int EnemiesPerRow = 6;
+    private const float DistanceBetweenEnemies = 100f;
+    private const float DistanceBetweenRows = 100f;
+    private const float SpawnOffset = 300f;
+
+    private readonly List<ShipEnemyMovement> _enemies = new List<ShipEnemyMovement>();
 
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private RectTransform _formationRect;
     [SerializeField] private Button _destroyButton;
     [SerializeField] private TMP_Text _gameOverText;
 
-    private InvadersMoveng _moveng;
+    private InvadersMoving _moving;
 
     private void Start()
     {
-        _moveng = new InvadersMoveng();
+        _moving = new InvadersMoving();
 
-        _destroyButton.onClick.AddListener(DestroyEnemies);
+        _destroyButton.onClick.AddListener(ClearEnemies);
+    }
+
+    private void OnDestroy()
+    {
+        _destroyButton.onClick.RemoveListener(ClearEnemies);
     }
 
     private void CreateEnemyFormation()
     {
         Vector2 startPosition = _formationRect.anchoredPosition;
 
-        for (int row = 0; row < _rows; row++)
+        for (int row = 0; row < Rows; row++)
         {
-            for (int col = 0; col < _enemiesPerRow; col++)
+            for (int col = 0; col < EnemiesPerRow; col++)
             {
-                Vector2 enemyPosition = startPosition + new Vector2(col * _distanceBetweenEnemies, row * -_distanceBetweenRows + _spawnOffset);
+                Vector2 enemyPosition = startPosition + new Vector2(col * DistanceBetweenEnemies, row * -DistanceBetweenRows + SpawnOffset);
 
                 GameObject enemy = Instantiate(_enemyPrefab, _formationRect);
                 RectTransform enemyRect = enemy.GetComponent<RectTransform>();
                 enemyRect.anchoredPosition = enemyPosition;
 
-                enemy.GetComponent<ShipEnemyMovement>().Init(_moveng);
+                enemy.GetComponent<ShipEnemyMovement>().Init(_moving);
+
+                _enemies.Add(enemy.GetComponent<ShipEnemyMovement>());
             }
         }
     }
 
-    private void DestroyEnemies()
+    private void ClearEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
+        foreach (ShipEnemyMovement enemy in _enemies)
         {
-            Destroy(enemy);
+            Destroy(enemy.gameObject);
         }
+
+        _enemies.Clear();
 
         CreateEnemyFormation();
 
         Time.timeScale = 1;
-        _gameOverText.text = "";
+        _gameOverText.text = string.Empty;
+    }
+
+    public bool IsAlive()
+    {
+        foreach (var enemy in _enemies)
+        {
+            if (enemy)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

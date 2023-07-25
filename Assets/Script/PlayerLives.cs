@@ -4,19 +4,28 @@ using TMPro;
 
 public class PlayerLives : MonoBehaviour
 {
-    private int _lives = 3;
     [SerializeField] private Image[] _livesUI;
     [SerializeField] private TMP_Text _gameOverText;
     [SerializeField] private Button _resetButton;
     [SerializeField] private GameObject _playersPrefab;
     [SerializeField] private Transform _canvasParent;
+    [SerializeField] private EnemySpawner _spawner;
 
-    private GameObject _players;
+    private GameObject _player;
+    private int _lives = 3;
+    private string _gameOver = "Game Over";
+    private string _gameComplete = "Complete";
 
     private void Start()
     {
         _resetButton.onClick.AddListener(SpawnPlayers);
         _resetButton.onClick.AddListener(ResetLives);
+    }
+
+    private void OnDestroy()
+    {
+        _resetButton.onClick.RemoveListener(SpawnPlayers);
+        _resetButton.onClick.RemoveListener(ResetLives);
     }
 
     private void Update()
@@ -40,7 +49,7 @@ public class PlayerLives : MonoBehaviour
     }
     public void DecreaseLives()
     {
-        _lives -= 1;
+        _lives--;
         UpdateLivesUI();
 
         if (_lives <= 0)
@@ -51,8 +60,8 @@ public class PlayerLives : MonoBehaviour
 
     private void GameOver()
     {
-        Destroy(_players);
-        _gameOverText.text = "Game Over";
+        Destroy(_player);
+        _gameOverText.text = _gameOver;
         Time.timeScale = 0;
     }
 
@@ -64,18 +73,28 @@ public class PlayerLives : MonoBehaviour
 
     private void SpawnPlayers()
     {
-        if (_players == null)
+        if (_player == null)
         {
-            _players = Instantiate(_playersPrefab, _canvasParent);
+            _player = Instantiate(_playersPrefab, _canvasParent);
+            _player.GetComponent<PlayerShip>().Init(this);
         }
     }
 
-    public void CheckCompletion()
+    private void CheckCompletion()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null && GameObject.FindGameObjectWithTag("Enemy") == null)
+        if (_player && !_spawner.IsAlive())
         {
-            _gameOverText.text = "Complete";
+            _gameOverText.text = _gameComplete;
             Time.timeScale = 0;
+        }
+    }
+
+    private void Init()
+    {
+        PlayerShip playerShip = GetComponent<PlayerShip>();
+        if (playerShip)
+        {
+            playerShip.Init(this);
         }
     }
 }

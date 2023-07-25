@@ -4,14 +4,20 @@ public class PlayerCollision : MonoBehaviour
 {
     private PlayerLives _playerLives;
 
-    private void Start()
+    public void Init(PlayerLives model)
     {
-        _playerLives = GetComponentInParent<PlayerLives>();
+        _playerLives = model;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.GetComponent<EnemyProjectile>())
+        {
+            Destroy(collision.gameObject);
+            _playerLives.DecreaseLives();
+        }
+
+        if (collision.GetComponent<ShipEnemyMovement>())
         {
             Destroy(collision.gameObject);
             _playerLives.DecreaseLives();
