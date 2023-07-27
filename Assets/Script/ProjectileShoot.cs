@@ -1,15 +1,24 @@
 using UnityEngine;
-
 public class ProjectileShoot : MonoBehaviour
 {
-    [SerializeField] private GameObject _bulletPrefab;
-    private GameObject _currentBullet;
+    [SerializeField] private GameObject _projectilePrefab;
+    private GameObject _currentProjectile;
+    private Canvas _canvas;
+
+    public void Init(Canvas canvas)
+    {
+        _canvas = canvas;
+    }
+
     private void Update()
     {
-        if (_currentBullet == null && Input.GetKeyDown(KeyCode.Space))
+        if (_currentProjectile == null && Input.GetKeyDown(KeyCode.Space))
         {
-            _currentBullet = Instantiate(_bulletPrefab, transform.position, Quaternion.identity);
-            _currentBullet.transform.SetParent(FindObjectOfType<Canvas>().transform);
+            _currentProjectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
+            if (_canvas != null)
+            {
+                _currentProjectile.transform.SetParent(_canvas.transform, false);
+            }
         }
     }
 }

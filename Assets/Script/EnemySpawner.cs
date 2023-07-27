@@ -62,6 +62,12 @@ public class EnemySpawner : MonoBehaviour
 
         _enemies.Clear();
 
+        EnemyProjectile[] enemyProjectiles = FindObjectsOfType<EnemyProjectile>();
+        foreach (EnemyProjectile enemyProjectile in enemyProjectiles)
+        {
+            Destroy(enemyProjectile.gameObject);
+        }
+
         CreateEnemyFormation();
 
         Time.timeScale = 1;

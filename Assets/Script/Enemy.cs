@@ -1,17 +1,11 @@
 /*using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IEnemy
 {
-    private ShipEnemyMovement _shipEnemyMovement;
     private InvadersMoving _moving;
 
-    private void Start()
+    public void Init(InvadersMoving moving)
     {
-        _shipEnemyMovement = GetComponent<ShipEnemyMovement>();
-        _moving = new InvadersMoving();
-    }
-    public void Init(InvadersMoving moven)
-    {
-        _moving = moven;
+        _moving = moving;
     }
 }*/
