@@ -10,6 +10,7 @@ public class PlayerLives : MonoBehaviour
     [SerializeField] private GameObject _playersPrefab;
     [SerializeField] private Transform _canvasParent;
     [SerializeField] private EnemySpawner _spawner;
+    [SerializeField] private Canvas _canvas;
 
     private GameObject _player;
     private int _lives = 3;
@@ -19,13 +20,11 @@ public class PlayerLives : MonoBehaviour
     private void Start()
     {
         _resetButton.onClick.AddListener(SpawnPlayers);
-        _resetButton.onClick.AddListener(ResetLives);
     }
 
     private void OnDestroy()
     {
         _resetButton.onClick.RemoveListener(SpawnPlayers);
-        _resetButton.onClick.RemoveListener(ResetLives);
     }
 
     private void Update()
@@ -77,6 +76,9 @@ public class PlayerLives : MonoBehaviour
         {
             _player = Instantiate(_playersPrefab, _canvasParent);
             _player.GetComponent<PlayerShip>().Init(this);
+            _player.GetComponent<ProjectileShoot>().Init(_canvas);
+            _resetButton.onClick.RemoveAllListeners();
+            _resetButton.onClick.AddListener(ResetScene);
         }
     }
 
@@ -96,5 +98,9 @@ public class PlayerLives : MonoBehaviour
         {
             playerShip.Init(this);
         }
+    }
+    private void ResetScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
     }
 }

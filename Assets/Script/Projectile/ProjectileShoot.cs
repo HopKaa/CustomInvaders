@@ -14,7 +14,7 @@ public class ProjectileShoot : MonoBehaviour
     {
         if (_currentProjectile == null && Input.GetKeyDown(KeyCode.Space))
         {
-            _currentProjectile = Instantiate(_projectilePrefab, transform.position, Quaternion.identity);
+            _currentProjectile = Instantiate(_projectilePrefab, transform.localPosition, Quaternion.identity);
             if (_canvas != null)
             {
                 _currentProjectile.transform.SetParent(_canvas.transform, false);

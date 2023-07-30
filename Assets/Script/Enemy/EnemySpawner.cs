@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
@@ -17,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private RectTransform _formationRect;
     [SerializeField] private Button _destroyButton;
     [SerializeField] private TMP_Text _gameOverText;
+    [SerializeField] private Canvas _canvas;
 
     private InvadersMoving _moving;
 
@@ -47,7 +49,7 @@ public class EnemySpawner : MonoBehaviour
                 enemyRect.anchoredPosition = enemyPosition;
 
                 enemy.GetComponent<ShipEnemyMovement>().Init(_moving);
-
+                
                 _enemies.Add(enemy.GetComponent<ShipEnemyMovement>());
             }
         }

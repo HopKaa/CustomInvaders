@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProjectileSpawner : MonoBehaviour
@@ -14,7 +15,6 @@ public class ProjectileSpawner : MonoBehaviour
         _spawnTimer = Random.Range(_spawnMin, _spawnMax);
     }
 
-
     private void Update()
     {
         _spawnTimer -= Time.deltaTime;
@@ -22,7 +22,7 @@ public class ProjectileSpawner : MonoBehaviour
         {
             _currentBullet = Instantiate(_enemyProjectile, transform.position, Quaternion.identity);
             _currentBullet.transform.SetParent(FindObjectOfType<Canvas>().transform);
-
+           
             _spawnTimer = Random.Range(_spawnMin, _spawnMax);
         }
     }

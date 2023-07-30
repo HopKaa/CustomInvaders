@@ -381,6 +381,7 @@ MonoBehaviour:
   _playersPrefab: {fileID: 4253738509360917526, guid: 32f8f6cbe0fc3714698ecf95b08d8289, type: 3}
   _canvasParent: {fileID: 99839373}
   _spawner: {fileID: 1413535003}
+  _canvas: {fileID: 99839372}
 --- !u!1 &157274148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,7 +2210,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1999075673}
-  - component: {fileID: 1999075672}
   m_Layer: 0
   m_Name: CanvasManager
   m_TagString: Untagged
@@ -2217,20 +2217,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1999075672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999075671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 486a5e93ccdb8a2439e7de87084f292b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _projectileShoot: {fileID: 667931554315621205, guid: 32f8f6cbe0fc3714698ecf95b08d8289, type: 3}
-  _canvas: {fileID: 99839372}
 --- !u!4 &1999075673
 Transform:
   m_ObjectHideFlags: 0
