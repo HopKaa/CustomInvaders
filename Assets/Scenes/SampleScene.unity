@@ -1595,6 +1595,7 @@ MonoBehaviour:
   _formationRect: {fileID: 157274149}
   _destroyButton: {fileID: 432439704}
   _gameOverText: {fileID: 982234140}
+  _canvas: {fileID: 99839372}
 --- !u!4 &1413535004
 Transform:
   m_ObjectHideFlags: 0

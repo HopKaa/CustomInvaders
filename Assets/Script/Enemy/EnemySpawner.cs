@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour
@@ -49,7 +48,9 @@ public class EnemySpawner : MonoBehaviour
                 enemyRect.anchoredPosition = enemyPosition;
 
                 enemy.GetComponent<ShipEnemyMovement>().Init(_moving);
-                
+                enemy.GetComponent<ProjectileSpawner>().Init(_canvas);
+
+
                 _enemies.Add(enemy.GetComponent<ShipEnemyMovement>());
             }
         }
