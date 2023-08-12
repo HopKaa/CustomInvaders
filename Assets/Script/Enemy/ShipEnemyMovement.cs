@@ -38,6 +38,11 @@ public class ShipEnemyMovement : MonoBehaviour
         transform.Translate(Vector2.right * _moveSpeed * Time.deltaTime);
     }
 
+    public void SetMoveSpeed(float speed)
+    {
+        _moveSpeed = speed;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Boundary>())

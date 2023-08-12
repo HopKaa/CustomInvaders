@@ -123,37 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &17999009
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 17999011}
-  m_Layer: 0
-  m_Name: LiveManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &17999011
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 17999009}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1281.7429, y: 628.96405, z: 595.28326}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &27198712
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,6 +351,7 @@ MonoBehaviour:
   _canvasParent: {fileID: 99839373}
   _spawner: {fileID: 1413535003}
   _canvas: {fileID: 99839372}
+  _levelManager: {fileID: 958418793}
 --- !u!1 &157274148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,6 +1210,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934653679}
   m_CullTransparentMesh: 1
+--- !u!1 &958418792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958418794}
+  - component: {fileID: 958418793}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &958418793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958418792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c626250eb43772488c070f276a68297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpawner: {fileID: 1413535003}
+  projectileSpawner: {fileID: -5062962962768317092, guid: 30d185dbb1dea6947bc3dc87feee191f, type: 3}
+  _gameText: {fileID: 982234140}
+  _levels:
+  - enemySpeed: 150
+    shootInterval: 15
+  - enemySpeed: 250
+    shootInterval: 10
+  - enemySpeed: 350
+    shootInterval: 5
+--- !u!4 &958418794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958418792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1380.6833, y: 1231.9952, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1596,6 +1620,9 @@ MonoBehaviour:
   _destroyButton: {fileID: 432439704}
   _gameOverText: {fileID: 982234140}
   _canvas: {fileID: 99839372}
+  _bonusPrefab: {fileID: 8544771612744375033, guid: ccc31c7582264df48a00515569a6ba1a, type: 3}
+  _bonusSpawnChance: 1
+  _bonusMoveSpeed: 100
 --- !u!4 &1413535004
 Transform:
   m_ObjectHideFlags: 0
@@ -2232,7 +2259,7 @@ Transform:
   m_Children:
   - {fileID: 99839373}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2121314554
 GameObject:

@@ -1,13 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProjectileSpawner : MonoBehaviour
 {
-    private const float _spawnMax = 20;
-    private const float _spawnMin = 5;
-
+    private float _spawnMax = 20f;
+    private float _spawnMin = 5f;
     [SerializeField] private GameObject _enemyProjectile;
-    
     private GameObject _currentBullet;
     private Canvas _canvas;
     private float _spawnTimer;
@@ -16,9 +13,16 @@ public class ProjectileSpawner : MonoBehaviour
     {
         _spawnTimer = Random.Range(_spawnMin, _spawnMax);
     }
+
     public void Init(Canvas canvas)
     {
         _canvas = canvas;
+    }
+
+    public void SetSpawnInterval(float interval)
+    {
+        _spawnMax = interval;
+        _spawnMin = interval / 2f;
     }
 
     private void Update()
@@ -28,7 +32,6 @@ public class ProjectileSpawner : MonoBehaviour
         {
             _currentBullet = Instantiate(_enemyProjectile, transform.localPosition, Quaternion.identity);
             _currentBullet.transform.SetParent(_canvas.transform, false);
-
             _spawnTimer = Random.Range(_spawnMin, _spawnMax);
         }
     }

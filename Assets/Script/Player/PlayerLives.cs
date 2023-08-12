@@ -11,6 +11,7 @@ public class PlayerLives : MonoBehaviour
     [SerializeField] private Transform _canvasParent;
     [SerializeField] private EnemySpawner _spawner;
     [SerializeField] private Canvas _canvas;
+    [SerializeField] private LevelManager _levelManager;
 
     private GameObject _player;
     private int _lives = 3;
@@ -46,6 +47,7 @@ public class PlayerLives : MonoBehaviour
             }
         }
     }
+
     public void DecreaseLives()
     {
         _lives--;
@@ -79,6 +81,7 @@ public class PlayerLives : MonoBehaviour
             _player.GetComponent<ProjectileShoot>().Init(_canvas);
             _resetButton.onClick.RemoveAllListeners();
             _resetButton.onClick.AddListener(ResetScene);
+            _levelManager.StartLevel();
         }
     }
 
@@ -86,19 +89,10 @@ public class PlayerLives : MonoBehaviour
     {
         if (_player && !_spawner.IsAlive())
         {
-            _gameOverText.text = _gameComplete;
-            Time.timeScale = 0;
+            _levelManager.LevelCompleted();
         }
     }
 
-    private void Init()
-    {
-        PlayerShip playerShip = GetComponent<PlayerShip>();
-        if (playerShip)
-        {
-            playerShip.Init(this);
-        }
-    }
     private void ResetScene()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");

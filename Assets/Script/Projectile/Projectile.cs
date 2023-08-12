@@ -4,10 +4,12 @@ public class Projectile : MonoBehaviour
 {
     private float _moveSpeed = 500f;
     private PointManager _pointManager;
+    private EnemySpawner _enemySpawner;
 
     private void Start()
     {
         _pointManager = PointManager.Instance;
+        _enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     private void Update()
@@ -21,6 +23,7 @@ public class Projectile : MonoBehaviour
         {
             Destroy(collision.gameObject);
             _pointManager.UpdateScore(50);
+            _enemySpawner.SpawnBonus(collision.transform.position);
             Destroy(gameObject);
         }
 

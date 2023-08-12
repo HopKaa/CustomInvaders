@@ -18,8 +18,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Button _destroyButton;
     [SerializeField] private TMP_Text _gameOverText;
     [SerializeField] private Canvas _canvas;
+    [SerializeField] private GameObject _bonusPrefab;
+    [SerializeField] private float _bonusSpawnChance;
+    [SerializeField] private float _bonusMoveSpeed = 100f;
+
 
     private InvadersMoving _moving;
+
 
     private void Start()
     {
@@ -33,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
         _destroyButton.onClick.RemoveListener(ClearEnemies);
     }
 
-    private void CreateEnemyFormation()
+    public void CreateEnemyFormation()
     {
         Vector2 startPosition = _formationRect.anchoredPosition;
 
@@ -88,5 +93,25 @@ public class EnemySpawner : MonoBehaviour
         }
 
         return false;
+    }
+    public void SetEnemySpeed(float speed)
+    {
+        foreach (ShipEnemyMovement enemy in _enemies)
+        {
+            enemy.SetMoveSpeed(speed);
+        }
+    }
+
+    public void SpawnBonus(Vector3 enemyPosition)
+    {
+        if (_bonusPrefab != null)
+        {
+            GameObject bonus = Instantiate(_bonusPrefab, enemyPosition, Quaternion.identity, _canvas.transform);
+            BonusMovement bonusMovement = bonus.GetComponent<BonusMovement>();
+            if (bonusMovement != null)
+            {
+                bonusMovement.Init(_bonusMoveSpeed);
+            }
+        }
     }
 }
