@@ -16,7 +16,6 @@ public class PlayerLives : MonoBehaviour
     private GameObject _player;
     private int _lives = 3;
     private string _gameOver = "Game Over";
-    private string _gameComplete = "Complete";
 
     private void Start()
     {

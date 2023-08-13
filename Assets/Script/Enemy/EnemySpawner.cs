@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     private const float DistanceBetweenEnemies = 100f;
     private const float DistanceBetweenRows = 100f;
     private const float SpawnOffset = 300f;
+    private bool canSpawnEnemies = true;
 
     private readonly List<ShipEnemyMovement> _enemies = new List<ShipEnemyMovement>();
 
@@ -28,6 +29,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 0;
+
         _moving = new InvadersMoving();
 
         _destroyButton.onClick.AddListener(ClearEnemies);
@@ -40,26 +43,32 @@ public class EnemySpawner : MonoBehaviour
 
     public void CreateEnemyFormation()
     {
-        Vector2 startPosition = _formationRect.anchoredPosition;
-
-        for (int row = 0; row < Rows; row++)
+        if (canSpawnEnemies)
         {
-            for (int col = 0; col < EnemiesPerRow; col++)
+            Vector2 startPosition = _formationRect.anchoredPosition;
+
+            for (int row = 0; row < Rows; row++)
             {
-                Vector2 enemyPosition = startPosition + new Vector2(col * DistanceBetweenEnemies, row * -DistanceBetweenRows + SpawnOffset);
+                for (int col = 0; col < EnemiesPerRow; col++)
+                {
+                    Vector2 enemyPosition = startPosition + new Vector2(col * DistanceBetweenEnemies, row * -DistanceBetweenRows + SpawnOffset);
 
-                GameObject enemy = Instantiate(_enemyPrefab, _formationRect);
-                RectTransform enemyRect = enemy.GetComponent<RectTransform>();
-                enemyRect.anchoredPosition = enemyPosition;
+                    GameObject enemy = Instantiate(_enemyPrefab, _formationRect);
+                    RectTransform enemyRect = enemy.GetComponent<RectTransform>();
+                    enemyRect.anchoredPosition = enemyPosition;
 
-                enemy.GetComponent<ShipEnemyMovement>().Init(_moving);
-                enemy.GetComponent<ProjectileSpawner>().Init(_canvas);
+                    ShipEnemyMovement enemyMovement = enemy.GetComponent<ShipEnemyMovement>();
+                    ProjectileSpawner projectileSpawner = enemy.GetComponent<ProjectileSpawner>();
 
+                    enemyMovement.Init(_moving);
+                    projectileSpawner.Init(_canvas);
 
-                _enemies.Add(enemy.GetComponent<ShipEnemyMovement>());
+                    _enemies.Add(enemyMovement);
+                }
             }
         }
     }
+
 
     private void ClearEnemies()
     {

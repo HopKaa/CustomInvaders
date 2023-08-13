@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Bonus : MonoBehaviour
 {
-    public BonusType bonusType;
-    public Sprite icon;
-    public float effectDuration;
+    private BonusType bonusType;
+    private Sprite icon;
+    private float effectDuration;
 
     private System.Random random;
 
