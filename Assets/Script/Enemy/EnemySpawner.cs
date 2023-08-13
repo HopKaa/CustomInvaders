@@ -22,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float _bonusSpawnChance;
     [SerializeField] private float _bonusMoveSpeed = 100f;
 
-
+    private float _lastBonusSpawnTime;
     private InvadersMoving _moving;
 
 
@@ -104,7 +104,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnBonus(Vector3 enemyPosition)
     {
-        if (_bonusPrefab != null)
+        if (_bonusPrefab != null && CanSpawnBonus())
         {
             GameObject bonus = Instantiate(_bonusPrefab, enemyPosition, Quaternion.identity, _canvas.transform);
             BonusMovement bonusMovement = bonus.GetComponent<BonusMovement>();
@@ -112,6 +112,12 @@ public class EnemySpawner : MonoBehaviour
             {
                 bonusMovement.Init(_bonusMoveSpeed);
             }
+            _lastBonusSpawnTime = Time.time;
         }
+    }
+
+    private bool CanSpawnBonus()
+    {
+        return Time.time - _lastBonusSpawnTime >= 20f;
     }
 }

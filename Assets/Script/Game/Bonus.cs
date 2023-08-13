@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bonus : MonoBehaviour
@@ -7,16 +6,8 @@ public class Bonus : MonoBehaviour
     public Sprite icon;
     public float effectDuration;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            ActivateBonusEffect();
-
-            Destroy(gameObject);
-        }
-    }
-    private void ActivateBonusEffect()
+    private static System.Random random = new System.Random();
+    public void ActivateBonusEffect()
     {
         switch (bonusType)
         {
@@ -24,26 +15,54 @@ public class Bonus : MonoBehaviour
                 PlayerInputControler playerMovement = FindObjectOfType<PlayerInputControler>();
                 if (playerMovement != null)
                 {
-                    playerMovement.ApplySpeedBoost(1000f, 10f);
+                    playerMovement.ApplySpeedBoost(effectDuration);
                 }
                 break;
-            /*case BonusType.Invincibility:
-                PlayerLives playerHealth = FindObjectOfType<PlayerLives>();
-                if (playerHealth != null)
+            case BonusType.TripleShot:
+                ProjectileShoot projectileShoot = FindObjectOfType<ProjectileShoot>();
+                if (projectileShoot != null)
                 {
-                    playerHealth.ActivateInvincibility(20f);
+                    projectileShoot.ActivateTripleShot(effectDuration);
                 }
-                break;*/
+                break;
+            case BonusType.DestroyLine:
+                DestroyLine();
+                break;
             default:
                 break;
         }
     }
 
-}
+        private void DestroyLine()
+        {
+            ShipEnemyMovement[] enemies = FindObjectsOfType<ShipEnemyMovement>();
+            PlayerShip playerShip = FindObjectOfType<PlayerShip>();
 
-public enum BonusType
+            if (enemies.Length > 0 && playerShip != null)
+            {
+                float lowestY = Mathf.Infinity;
+                ShipEnemyMovement closestEnemy = null;
+
+                foreach (ShipEnemyMovement enemy in enemies)
+                {
+                    if (enemy.transform.position.y < lowestY)
+                    {
+                        lowestY = enemy.transform.position.y;
+                        closestEnemy = enemy;
+                    }
+                }
+
+                if (closestEnemy != null)
+                {
+                    closestEnemy.DestroyEnemy();
+                }
+            }
+        }
+    }
+
+    public enum BonusType
 {
     SpeedUp,
-    Invincibility
+    TripleShot,
+    DestroyLine
 }
-
