@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Bonus : MonoBehaviour
@@ -6,10 +7,18 @@ public class Bonus : MonoBehaviour
     public Sprite icon;
     public float effectDuration;
 
-    private static System.Random random = new System.Random();
+    private System.Random random;
+
+    private void Start()
+    {
+        random = new System.Random();
+    }
     public void ActivateBonusEffect()
     {
-        switch (bonusType)
+        int randomIndex = random.Next(0, Enum.GetValues(typeof(BonusType)).Length - 1);
+        BonusType randomBonusType = (BonusType)randomIndex;
+
+        switch (randomBonusType)
         {
             case BonusType.SpeedUp:
                 PlayerInputControler playerMovement = FindObjectOfType<PlayerInputControler>();
@@ -33,7 +42,8 @@ public class Bonus : MonoBehaviour
         }
     }
 
-        private void DestroyLine()
+
+    private void DestroyLine()
         {
             ShipEnemyMovement[] enemies = FindObjectsOfType<ShipEnemyMovement>();
             PlayerShip playerShip = FindObjectOfType<PlayerShip>();
@@ -58,7 +68,7 @@ public class Bonus : MonoBehaviour
                 }
             }
         }
-    }
+}
 
     public enum BonusType
 {

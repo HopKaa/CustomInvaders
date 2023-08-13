@@ -4,9 +4,7 @@ public class PlayerInputControler : MonoBehaviour
 {
     private float _moveSpeed = 300f;
     private float _horizontalInput;
-    private float _boostDuration;
     private float _boostTimer;
-    private bool _tripleShotActive;
 
     private void Update()
     {
@@ -27,7 +25,6 @@ public class PlayerInputControler : MonoBehaviour
 
     public void ApplySpeedBoost( float duration)
     {
-        _boostDuration = duration;
         _boostTimer = duration;
         _moveSpeed = 500f;
     }

@@ -10,6 +10,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private ProjectileSpawner projectileSpawner;
     [SerializeField] private TMP_Text _gameText;
     [SerializeField] private Level[] _levels;
+    [SerializeField] private TMP_Text _levelText;
+    [SerializeField] private TMP_Text _countdownText;
+    [SerializeField] private TMP_Text _goText;
 
     public void StartLevel()
     {
@@ -45,6 +48,7 @@ public class LevelManager : MonoBehaviour
     }
     private void EndGame()
     {
+        Time.timeScale = 0;
         _gameText.text = _gameComplete;
     }
 }

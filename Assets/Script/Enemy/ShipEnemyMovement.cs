@@ -53,26 +53,26 @@ public class ShipEnemyMovement : MonoBehaviour
 
     public void DestroyEnemy()
     {
-        float distanceToPlayer = Mathf.Infinity; // инициализируем переменную для хранения расстояния до игрока
-        PlayerShip playerShip = FindObjectOfType<PlayerShip>(); // находим игрока по классу
+        float distanceToPlayer = Mathf.Infinity; 
+        PlayerShip playerShip = FindObjectOfType<PlayerShip>();
 
-        foreach (ShipEnemyMovement enemy in FindObjectsOfType<ShipEnemyMovement>()) // ищем всех врагов по классу
+        foreach (ShipEnemyMovement enemy in FindObjectsOfType<ShipEnemyMovement>())
         {
-            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position); // вычисляем расстояние между врагом и игроком
+            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position);
 
-            if (distance < distanceToPlayer) // если найденное расстояние меньше предыдущего минимального расстояния
+            if (distance < distanceToPlayer)
             {
-                distanceToPlayer = distance; // обновляем минимальное расстояние
+                distanceToPlayer = distance;
             }
         }
 
-        foreach (ShipEnemyMovement enemy in FindObjectsOfType<ShipEnemyMovement>()) // проходим по всем врагам
+        foreach (ShipEnemyMovement enemy in FindObjectsOfType<ShipEnemyMovement>())
         {
-            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position); // вычисляем расстояние до игрока
+            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position);
 
-            if (distance == distanceToPlayer) // если текущий враг имеет минимальное расстояние до игрока
+            if (distance == distanceToPlayer)
             {
-                Destroy(enemy.gameObject); // уничтожаем врага
+                Destroy(enemy.gameObject);
             }
         }
     }
