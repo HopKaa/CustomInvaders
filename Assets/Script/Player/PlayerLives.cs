@@ -16,6 +16,13 @@ public class PlayerLives : MonoBehaviour
     private GameObject _player;
     private int _lives = 3;
     private string _gameOver = "Game Over";
+    private bool _canEnemies;
+
+    public bool CanEnemies
+    {
+        get { return _canEnemies; }
+        set { _canEnemies = value; }
+    }
 
     private void Start()
     {
@@ -86,7 +93,7 @@ public class PlayerLives : MonoBehaviour
 
     private void CheckCompletion()
     {
-        if (_player && !_spawner.IsAlive())
+        if (_player && !_spawner.IsAlive() && !_canEnemies)
         {
             _levelManager.LevelCompleted();
         }

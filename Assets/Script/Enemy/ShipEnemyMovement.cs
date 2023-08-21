@@ -64,6 +64,7 @@ public class ShipEnemyMovement : MonoBehaviour
             {
                 distanceToPlayer = distance;
             }
+            Destroy(gameObject);
         }
 
         foreach (ShipEnemyMovement enemy in FindObjectsOfType<ShipEnemyMovement>())

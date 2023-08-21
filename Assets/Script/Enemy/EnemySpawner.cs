@@ -10,7 +10,6 @@ public class EnemySpawner : MonoBehaviour
     private const float DistanceBetweenEnemies = 100f;
     private const float DistanceBetweenRows = 100f;
     private const float SpawnOffset = 300f;
-    private bool canSpawnEnemies = true;
 
     private readonly List<ShipEnemyMovement> _enemies = new List<ShipEnemyMovement>();
 
@@ -43,8 +42,6 @@ public class EnemySpawner : MonoBehaviour
 
     public void CreateEnemyFormation()
     {
-        if (canSpawnEnemies)
-        {
             Vector2 startPosition = _formationRect.anchoredPosition;
 
             for (int row = 0; row < Rows; row++)
@@ -66,7 +63,6 @@ public class EnemySpawner : MonoBehaviour
                     _enemies.Add(enemyMovement);
                 }
             }
-        }
     }
 
 
@@ -84,8 +80,6 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(enemyProjectile.gameObject);
         }
-
-        CreateEnemyFormation();
 
         Time.timeScale = 1;
         _gameOverText.text = string.Empty;
