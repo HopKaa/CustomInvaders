@@ -17,7 +17,7 @@ public class PlayerLives : MonoBehaviour
     private GameObject _player;
     private int _lives = 3;
     private string _gameOver = "Game Over";
-    private bool _canEnemies;
+    private bool _levelLaunced;
 
     private void Start()
     {
@@ -72,10 +72,10 @@ public class PlayerLives : MonoBehaviour
         _lives = 3;
         UpdateLivesUI();
     }
-    public bool CanEnemies
+
+    public void LevelLaunce()
     {
-        get { return _canEnemies; }
-        set { _canEnemies = value; }
+        _levelLaunced = true;
     }
     private void SpawnPlayers()
     {
@@ -86,18 +86,17 @@ public class PlayerLives : MonoBehaviour
             _player.GetComponent<ProjectileShoot>().Init(_canvas);
             _resetButton.onClick.RemoveAllListeners();
             _resetButton.onClick.AddListener(ResetScene);
-            _levelManager.CanEnemies = true;
             _levelManager.StartLevel();
         }
     }
 
     private void CheckCompletion()
     {
-        if (_player && !_spawner.IsAlive() && _canEnemies)
+        if (_player && !_spawner.IsAlive() && _levelLaunced)
         {
-            _canEnemies = false;
             StartCoroutine(StartNextLevel());
-        }
+            _levelLaunced = false;
+        }    
     }
 
     private void ResetScene()
@@ -108,6 +107,6 @@ public class PlayerLives : MonoBehaviour
     {
         yield return null;
         _levelManager.LevelCompleted();
+        _levelManager.StartLevel();
     }
-
 }

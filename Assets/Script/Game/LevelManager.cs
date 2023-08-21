@@ -6,7 +6,6 @@ public class LevelManager : MonoBehaviour
 {
     private int _currentLevelIndex = 0;
     private string _gameComplete = "Complete";
-    private bool _canSpawnEnemies;
 
     [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private ProjectileSpawner projectileSpawner;
@@ -24,37 +23,26 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator LevelRoutine()
     {
-        _canSpawnEnemies = false;
-
         _levelText.text = "Level " + (_currentLevelIndex + 1);
         yield return new WaitForSeconds(1f);
-
         _countdownText.text = "3";
         yield return new WaitForSeconds(1f);
-
         _countdownText.text = "2";
         yield return new WaitForSeconds(1f);
-
         _countdownText.text = "1";
         yield return new WaitForSeconds(1f);
-
         _countdownText.text = string.Empty;
         _goText.text = "GO!";
         yield return new WaitForSeconds(1f);
-
         _goText.text = string.Empty;
         Time.timeScale = 1;
-
         if (enemySpawner != null && projectileSpawner != null)
         {
             enemySpawner.CreateEnemyFormation();
             SetEnemySpeed(_levels[_currentLevelIndex].enemySpeed);
             SetShootInterval(_levels[_currentLevelIndex].shootInterval);
         }
-
-        _canSpawnEnemies = true;
-        Debug.Log(_canSpawnEnemies);
-        yield break;
+        _playerLives.LevelLaunce();
     }
 
 
@@ -90,18 +78,6 @@ public class LevelManager : MonoBehaviour
     private IEnumerator StartNextLevel()
     {
         yield return new WaitForSeconds(1f);
-        _playerLives.CanEnemies = false;
         _playerLives.StartNextLevel();
-    }
-
-    public bool CanSpawnEnemies
-    {
-        get { return _canSpawnEnemies; }
-    }
-
-    public bool CanEnemies
-    {
-        get { return _canSpawnEnemies; }
-        set { _canSpawnEnemies = value; }
     }
 }
