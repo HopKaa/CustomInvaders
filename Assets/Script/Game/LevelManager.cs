@@ -83,13 +83,25 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            _playerLives.CanEnemies = true;
-            StartLevel();
+            StartCoroutine(StartNextLevel());
         }
+    }
+
+    private IEnumerator StartNextLevel()
+    {
+        yield return new WaitForSeconds(1f);
+        _playerLives.CanEnemies = false;
+        _playerLives.StartNextLevel();
     }
 
     public bool CanSpawnEnemies
     {
         get { return _canSpawnEnemies; }
+    }
+
+    public bool CanEnemies
+    {
+        get { return _canSpawnEnemies; }
+        set { _canSpawnEnemies = value; }
     }
 }

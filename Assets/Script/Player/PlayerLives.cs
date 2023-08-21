@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class PlayerLives : MonoBehaviour
 {
@@ -17,12 +18,6 @@ public class PlayerLives : MonoBehaviour
     private int _lives = 3;
     private string _gameOver = "Game Over";
     private bool _canEnemies;
-
-    public bool CanEnemies
-    {
-        get { return _canEnemies; }
-        set { _canEnemies = value; }
-    }
 
     private void Start()
     {
@@ -77,7 +72,11 @@ public class PlayerLives : MonoBehaviour
         _lives = 3;
         UpdateLivesUI();
     }
-
+    public bool CanEnemies
+    {
+        get { return _canEnemies; }
+        set { _canEnemies = value; }
+    }
     private void SpawnPlayers()
     {
         if (_player == null)
@@ -87,15 +86,17 @@ public class PlayerLives : MonoBehaviour
             _player.GetComponent<ProjectileShoot>().Init(_canvas);
             _resetButton.onClick.RemoveAllListeners();
             _resetButton.onClick.AddListener(ResetScene);
+            _levelManager.CanEnemies = true;
             _levelManager.StartLevel();
         }
     }
 
     private void CheckCompletion()
     {
-        if (_player && !_spawner.IsAlive() && !_canEnemies)
+        if (_player && !_spawner.IsAlive() && _canEnemies)
         {
-            _levelManager.LevelCompleted();
+            _canEnemies = false;
+            StartCoroutine(StartNextLevel());
         }
     }
 
@@ -103,4 +104,10 @@ public class PlayerLives : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
     }
+    public IEnumerator StartNextLevel()
+    {
+        yield return null;
+        _levelManager.LevelCompleted();
+    }
+
 }
