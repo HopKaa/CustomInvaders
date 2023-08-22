@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Bonus : MonoBehaviour
 {
-    private BonusType _bonusType;
-    private Sprite _icon;
     private float _effectDuration;
 
     private System.Random _random;

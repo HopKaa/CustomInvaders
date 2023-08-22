@@ -4,7 +4,9 @@ public class ProjectileSpawner : MonoBehaviour
 {
     private float _spawnMax = 20f;
     private float _spawnMin = 5f;
+
     [SerializeField] private GameObject _enemyProjectile;
+
     private GameObject _currentBullet;
     private Canvas _canvas;
     private float _spawnTimer;

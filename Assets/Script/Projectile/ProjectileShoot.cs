@@ -4,6 +4,7 @@ public class ProjectileShoot : MonoBehaviour
 {
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private bool _tripleShotActive;
+
     private GameObject _currentProjectile;
     private Canvas _canvas;
     private float _tripleShotDuration;
