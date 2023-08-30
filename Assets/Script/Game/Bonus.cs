@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Bonus : MonoBehaviour
 {
-    private float _effectDuration;
+    private float _effectDuration = 10f;
 
     private System.Random _random;
 
@@ -19,19 +19,10 @@ public class Bonus : MonoBehaviour
         switch (randomBonusType)
         {
             case BonusType.SpeedUp:
-                PlayerInputControler playerMovement = FindObjectOfType<PlayerInputControler>();
-                if (playerMovement != null)
-                {
-                    playerMovement.ApplySpeedBoost(_effectDuration);
-                }
+                ApplySpeedUp();
                 break;
             case BonusType.TripleShot:
-                ProjectileShoot projectileShoot = FindObjectOfType<ProjectileShoot>();
-                if (projectileShoot != null)
-                {
-                    float tripleShotDuration = 10f;
-                    projectileShoot.ActivateTripleShot(tripleShotDuration);
-                }
+                ApplyTripleShot();
                 break;
             case BonusType.DestroyLine:
                 DestroyLine();
@@ -40,8 +31,24 @@ public class Bonus : MonoBehaviour
                 break;
         }
     }
+    private void ApplySpeedUp()
+    {
+        PlayerInputControler playerMovement = FindObjectOfType<PlayerInputControler>();
+        if (playerMovement != null)
+        {
+            playerMovement.ApplySpeedBoost(_effectDuration);
+        }
+    }
 
-
+    private static void ApplyTripleShot()
+    {
+        ProjectileShoot projectileShoot = FindObjectOfType<ProjectileShoot>();
+        if (projectileShoot != null)
+        {
+            float tripleShotDuration = 10f;
+            projectileShoot.ActivateTripleShot(tripleShotDuration);
+        }
+    }
 
     private void DestroyLine()
     {
@@ -68,11 +75,4 @@ public class Bonus : MonoBehaviour
             }
         }
     }
-}
-
-    public enum BonusType
-{
-    SpeedUp,
-    TripleShot,
-    DestroyLine
 }
