@@ -5,15 +5,22 @@ public class Bonus : MonoBehaviour
 {
     private float _effectDuration = 10f;
 
-    private System.Random _random;
+    private PlayerInputControler _playerMovement;
+    private ProjectileShoot _projectileShoot;
+    private ShipEnemyMovement[] _enemies;
+    private PlayerShip _playerShip;
 
-    private void Start()
+    public void Init(PlayerInputControler playerMovement, ProjectileShoot projectileShoot, ShipEnemyMovement[] enemies, PlayerShip playerShip)
     {
-        _random = new System.Random();
+        _playerMovement = playerMovement;
+        _projectileShoot = projectileShoot;
+        _enemies = enemies;
+        _playerShip = playerShip;
     }
+
     public void ActivateBonusEffect()
     {
-        int randomIndex = _random.Next(0, Enum.GetValues(typeof(BonusType)).Length - 1);
+        int randomIndex = UnityEngine.Random.Range(0, Enum.GetValues(typeof(BonusType)).Length - 1);
         BonusType randomBonusType = (BonusType)randomIndex;
 
         switch (randomBonusType)
@@ -31,36 +38,32 @@ public class Bonus : MonoBehaviour
                 break;
         }
     }
+
     private void ApplySpeedUp()
     {
-        PlayerInputControler playerMovement = FindObjectOfType<PlayerInputControler>();
-        if (playerMovement != null)
+        if (_playerMovement != null)
         {
-            playerMovement.ApplySpeedBoost(_effectDuration);
+            _playerMovement.ApplySpeedBoost(_effectDuration);
         }
     }
 
-    private static void ApplyTripleShot()
+    private void ApplyTripleShot()
     {
-        ProjectileShoot projectileShoot = FindObjectOfType<ProjectileShoot>();
-        if (projectileShoot != null)
+        if (_projectileShoot != null)
         {
             float tripleShotDuration = 10f;
-            projectileShoot.ActivateTripleShot(tripleShotDuration);
+            _projectileShoot.ActivateTripleShot(tripleShotDuration);
         }
     }
 
     private void DestroyLine()
     {
-        ShipEnemyMovement[] enemies = FindObjectsOfType<ShipEnemyMovement>();
-        PlayerShip playerShip = FindObjectOfType<PlayerShip>();
-
-        if (enemies.Length > 0 && playerShip != null)
+        if (_enemies.Length > 0 && _playerShip != null)
         {
             float lowestY = Mathf.Infinity;
             ShipEnemyMovement closestEnemy = null;
 
-            foreach (ShipEnemyMovement enemy in enemies)
+            foreach (ShipEnemyMovement enemy in _enemies)
             {
                 if (enemy.transform.position.y < lowestY)
                 {

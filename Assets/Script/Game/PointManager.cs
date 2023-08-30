@@ -5,13 +5,11 @@ public class PointManager : MonoBehaviour
 {
     private static PointManager _instance;
 
-    private int _score;
+    public static PointManager Instance => _instance;
+
     [SerializeField] private Text _scoreText;
 
-    public static PointManager Instance
-    {
-        get { return _instance; }
-    }
+    private int _score;
 
     private void Awake()
     {
@@ -22,6 +20,14 @@ public class PointManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if(_instance == this)
+        {
+            _instance = null;
         }
     }
 

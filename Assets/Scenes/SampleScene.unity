@@ -1247,13 +1247,14 @@ MonoBehaviour:
   _countdownText: {fileID: 1891594029}
   _goText: {fileID: 1003522689}
   _levels:
-  - enemySpeed: 150
-    shootInterval: 15
-  - enemySpeed: 250
-    shootInterval: 10
-  - enemySpeed: 350
-    shootInterval: 5
+  - EnemySpeed: 150
+    ShootInterval: 20
+  - EnemySpeed: 300
+    ShootInterval: 15
+  - EnemySpeed: 400
+    ShootInterval: 10
   _playerLives: {fileID: 99839375}
+  _pauseMenu: {fileID: 99839374}
 --- !u!4 &958418794
 Transform:
   m_ObjectHideFlags: 0

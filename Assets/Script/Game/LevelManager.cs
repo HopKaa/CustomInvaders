@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TMP_Text _goText;
     [SerializeField] private Level[] _levels;
     [SerializeField] private PlayerLives _playerLives;
+    [SerializeField] private PauseMenu _pauseMenu;
 
     public void StartLevel()
     {
@@ -35,12 +36,12 @@ public class LevelManager : MonoBehaviour
         _goText.text = "GO!";
         yield return new WaitForSeconds(1f);
         _goText.text = string.Empty;
-        Time.timeScale = 1;
+        _pauseMenu.ResumeGame();
         if (enemySpawner != null && projectileSpawner != null)
         {
             enemySpawner.CreateEnemyFormation();
-            SetEnemySpeed(_levels[_currentLevelIndex].enemySpeed);
-            SetShootInterval(_levels[_currentLevelIndex].shootInterval);
+            SetEnemySpeed(_levels[_currentLevelIndex].EnemySpeed);
+            SetShootInterval(_levels[_currentLevelIndex].ShootInterval);
         }
         _playerLives.LevelLaunce();
     }
@@ -58,7 +59,7 @@ public class LevelManager : MonoBehaviour
 
     private void EndGame()
     {
-        Time.timeScale = 0;
+        _pauseMenu.PauseGame();
         _gameText.text = _gameComplete;
     }
 
