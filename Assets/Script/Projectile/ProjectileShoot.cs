@@ -16,7 +16,7 @@ public class ProjectileShoot : MonoBehaviour
 
     private void Update()
     {
-        if (_currentProjectile == null && Input.GetKeyDown(KeyCode.Space))
+        if (!_currentProjectile && Input.GetKeyDown(KeyCode.Space))
         {
             SpawnProjectile();
         }
@@ -45,31 +45,24 @@ public class ProjectileShoot : MonoBehaviour
         Quaternion rightRotation = Quaternion.Euler(0, 0, -30);
 
         _currentProjectile = Instantiate(_projectilePrefab, transform.localPosition, Quaternion.identity);
-        if (_canvas != null)
-        {
-            _currentProjectile.transform.SetParent(_canvas.transform, false);
-        }
+        ShootProjectile();
 
         _currentProjectile = Instantiate(_projectilePrefab, transform.localPosition, leftRotation);
-        if (_canvas != null)
-        {
-            _currentProjectile.transform.SetParent(_canvas.transform, false);
-        }
+        ShootProjectile();
 
         _currentProjectile = Instantiate(_projectilePrefab, transform.localPosition, rightRotation);
-        if (_canvas != null)
-        {
-            _currentProjectile.transform.SetParent(_canvas.transform, false);
-        }
+        ShootProjectile();
     }
 
     private void SpawnSingleProjectile()
     {
         _currentProjectile = Instantiate(_projectilePrefab, transform.localPosition, Quaternion.identity);
-        if (_canvas != null)
-        {
-            _currentProjectile.transform.SetParent(_canvas.transform, false);
-        }
+        _currentProjectile.transform.SetParent(_canvas.transform, false);
+    }
+
+    private void ShootProjectile()
+    {
+        _currentProjectile.transform.SetParent(_canvas.transform, false);
     }
 
     public void ActivateTripleShot(float duration)

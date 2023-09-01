@@ -7,10 +7,10 @@ public class Bonus : MonoBehaviour
 
     private PlayerInputControler _playerMovement;
     private ProjectileShoot _projectileShoot;
-    private ShipEnemyMovement[] _enemies;
+    private EnemySpawner[] _enemies;
     private PlayerShip _playerShip;
 
-    public void Init(PlayerInputControler playerMovement, ProjectileShoot projectileShoot, ShipEnemyMovement[] enemies, PlayerShip playerShip)
+    public void Init(PlayerInputControler playerMovement, ProjectileShoot projectileShoot, EnemySpawner[] enemies, PlayerShip playerShip)
     {
         _playerMovement = playerMovement;
         _projectileShoot = projectileShoot;
@@ -61,9 +61,9 @@ public class Bonus : MonoBehaviour
         if (_enemies.Length > 0 && _playerShip != null)
         {
             float lowestY = Mathf.Infinity;
-            ShipEnemyMovement closestEnemy = null;
+            EnemySpawner closestEnemy = null;
 
-            foreach (ShipEnemyMovement enemy in _enemies)
+            foreach (EnemySpawner enemy in _enemies)
             {
                 if (enemy.transform.position.y < lowestY)
                 {

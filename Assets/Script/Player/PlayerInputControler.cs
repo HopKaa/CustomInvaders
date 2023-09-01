@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class PlayerInputControler : MonoBehaviour
 {
-    private float _moveSpeed = 300f;
+    private float _boostSpeed = 500f;
+    private float _normalSpeed = 300f;
+    private float _moveSpeed;
     private float _horizontalInput;
     private float _boostTimer;
 
+    private void Start()
+    {
+        _moveSpeed = 300f;
+    }
     private void Update()
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -16,7 +22,7 @@ public class PlayerInputControler : MonoBehaviour
 
             if (_boostTimer <= 0)
             {
-                _moveSpeed = 300f;
+                _moveSpeed = _normalSpeed;
             }
         }
 
@@ -26,6 +32,6 @@ public class PlayerInputControler : MonoBehaviour
     public void ApplySpeedBoost( float duration)
     {
         _boostTimer = duration;
-        _moveSpeed = 500f;
+        _moveSpeed = _boostSpeed;
     }
 }

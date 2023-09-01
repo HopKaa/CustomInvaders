@@ -16,11 +16,11 @@ public class PauseMenu : MonoBehaviour
         {
             if(_isPaused)
             {
-                ResumeGame();
+                OnResumeGame();
             }
             else
             {
-                PauseGame();
+                OnPauseGame();
             }
         }
     }
@@ -28,11 +28,21 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
+    }
+
+    private void OnPauseGame()
+    {
+        Time.timeScale = 0;
         _pausePanel.SetActive(true);
         _isPaused = true;
     }
 
     public void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void OnResumeGame()
     {
         Time.timeScale = 1;
         _pausePanel.SetActive(false);

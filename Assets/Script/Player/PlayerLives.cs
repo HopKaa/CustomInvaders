@@ -13,6 +13,7 @@ public class PlayerLives : MonoBehaviour
     [SerializeField] private EnemySpawner _spawner;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private LevelManager _levelManager;
+    [SerializeField] private PauseMenu _pauseMenu;
 
     private GameObject _player;
     private int _lives = 3;
@@ -26,7 +27,7 @@ public class PlayerLives : MonoBehaviour
 
     private void OnDestroy()
     {
-        _resetButton.onClick.RemoveListener(SpawnPlayers);
+        _resetButton.onClick.RemoveAllListeners();
     }
 
     private void Update()
@@ -38,14 +39,7 @@ public class PlayerLives : MonoBehaviour
     {
         for (int i = 0; i < _livesUI.Length; i++)
         {
-            if (i < _lives)
-            {
-                _livesUI[i].enabled = true;
-            }
-            else
-            {
-                _livesUI[i].enabled = false;
-            }
+            _livesUI[i].enabled = i < _lives;
         }
     }
 
@@ -64,7 +58,7 @@ public class PlayerLives : MonoBehaviour
     {
         Destroy(_player);
         _gameOverText.text = _gameOver;
-        Time.timeScale = 0;
+        _pauseMenu.PauseGame();
     }
 
     private void ResetLives()

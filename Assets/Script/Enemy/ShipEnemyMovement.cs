@@ -3,10 +3,10 @@ using UnityEngine;
 public class ShipEnemyMovement : MonoBehaviour
 {
     private float _moveSpeed = 200f;
-    private InvadersMoving _moving;
+    private CommonInvadersMovingEvent _moving;
     private bool _hasTriggeredBoundary = false;
 
-    public void Init(InvadersMoving moven)
+    public void Init(CommonInvadersMovingEvent moven)
     {
         _moving = moven;
     }
@@ -48,33 +48,6 @@ public class ShipEnemyMovement : MonoBehaviour
         if (collision.GetComponent<Boundary>())
         {
             _moving.InvaderTouchBoundary();
-        }
-    }
-
-    public void DestroyEnemy()
-    {
-        float distanceToPlayer = Mathf.Infinity; 
-        PlayerShip playerShip = FindObjectOfType<PlayerShip>();
-
-        foreach (ShipEnemyMovement enemy in FindObjectsOfType<ShipEnemyMovement>())
-        {
-            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position);
-
-            if (distance < distanceToPlayer)
-            {
-                distanceToPlayer = distance;
-            }
-            Destroy(gameObject);
-        }
-
-        foreach (ShipEnemyMovement enemy in FindObjectsOfType<ShipEnemyMovement>())
-        {
-            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position);
-
-            if (distance == distanceToPlayer)
-            {
-                Destroy(enemy.gameObject);
-            }
         }
     }
 }

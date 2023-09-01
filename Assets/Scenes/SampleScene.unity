@@ -353,6 +353,7 @@ MonoBehaviour:
   _spawner: {fileID: 1413535003}
   _canvas: {fileID: 99839372}
   _levelManager: {fileID: 958418793}
+  _pauseMenu: {fileID: 0}
 --- !u!1 &157274148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,13 +1932,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 5467442705980022156, guid: 30d185dbb1dea6947bc3dc87feee191f, type: 3}
+  _playerShip: {fileID: 975234680085154398, guid: 32f8f6cbe0fc3714698ecf95b08d8289, type: 3}
   _formationRect: {fileID: 157274149}
-  _destroyButton: {fileID: 432439704}
   _gameOverText: {fileID: 982234140}
   _canvas: {fileID: 99839372}
   _bonusPrefab: {fileID: 8544771612744375033, guid: ccc31c7582264df48a00515569a6ba1a, type: 3}
-  _bonusSpawnChance: 1
   _bonusMoveSpeed: 100
+  _pauseMenu: {fileID: 99839374}
 --- !u!4 &1413535004
 Transform:
   m_ObjectHideFlags: 0

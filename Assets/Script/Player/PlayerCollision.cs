@@ -15,6 +15,7 @@ public class PlayerCollision : MonoBehaviour
         {
             Destroy(collision.gameObject);
             _playerLives.DecreaseLives();
+            return;
         }
 
         if (collision.GetComponent<ShipEnemyMovement>())

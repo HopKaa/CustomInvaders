@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,30 +15,21 @@ public class EnemySpawner : MonoBehaviour
     private readonly List<ShipEnemyMovement> _enemies = new List<ShipEnemyMovement>();
 
     [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private PlayerShip _playerShip;
     [SerializeField] private RectTransform _formationRect;
-    [SerializeField] private Button _destroyButton;
     [SerializeField] private TMP_Text _gameOverText;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private GameObject _bonusPrefab;
-    [SerializeField] private float _bonusSpawnChance;
     [SerializeField] private float _bonusMoveSpeed = 100f;
+    [SerializeField] private PauseMenu _pauseMenu;
 
     private float _lastBonusSpawnTime;
-    private InvadersMoving _moving;
+    private CommonInvadersMovingEvent _moving;
 
 
     private void Start()
     {
-        Time.timeScale = 0;
-
-        _moving = new InvadersMoving();
-
-        _destroyButton.onClick.AddListener(ClearEnemies);
-    }
-
-    private void OnDestroy()
-    {
-        _destroyButton.onClick.RemoveListener(ClearEnemies);
+        _moving = new CommonInvadersMovingEvent();
     }
 
     public void CreateEnemyFormation()
@@ -65,38 +57,11 @@ public class EnemySpawner : MonoBehaviour
             }
     }
 
-
-    private void ClearEnemies()
-    {
-        foreach (ShipEnemyMovement enemy in _enemies)
-        {
-            Destroy(enemy.gameObject);
-        }
-
-        _enemies.Clear();
-
-        EnemyProjectile[] enemyProjectiles = FindObjectsOfType<EnemyProjectile>();
-        foreach (EnemyProjectile enemyProjectile in enemyProjectiles)
-        {
-            Destroy(enemyProjectile.gameObject);
-        }
-
-        Time.timeScale = 1;
-        _gameOverText.text = string.Empty;
-    }
-
     public bool IsAlive()
     {
-        foreach (var enemy in _enemies)
-        {
-            if (enemy)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return _enemies.Any(enemy => enemy);
     }
+
     public void SetEnemySpeed(float speed)
     {
         foreach (ShipEnemyMovement enemy in _enemies)
@@ -122,5 +87,32 @@ public class EnemySpawner : MonoBehaviour
     private bool CanSpawnBonus()
     {
         return Time.time - _lastBonusSpawnTime >= 20f;
+    }
+
+    public void DestroyEnemy()
+    {
+        float distanceToPlayer = Mathf.Infinity;
+        PlayerShip playerShip = _playerShip;
+
+        foreach (ShipEnemyMovement enemy in _enemies)
+        {
+            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position);
+
+            if (distance < distanceToPlayer)
+            {
+                distanceToPlayer = distance;
+            }
+            Destroy(gameObject);
+        }
+
+        foreach (ShipEnemyMovement enemy in _enemies)
+        {
+            float distance = Vector3.Distance(enemy.transform.position, playerShip.transform.position);
+
+            if (distance == distanceToPlayer)
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
     }
 }

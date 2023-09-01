@@ -1,6 +1,6 @@
 using System;
 
-public class InvadersMoving
+public class CommonInvadersMovingEvent
 {
     public event Action MovingChanged;
     public void InvaderTouchBoundary()
